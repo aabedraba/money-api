@@ -1,7 +1,6 @@
 "use client"
 
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react"
-import Image from "next/image"
 import { signIn } from "next-auth/react"
 
 import Modal from "@/components/ui/modal"
