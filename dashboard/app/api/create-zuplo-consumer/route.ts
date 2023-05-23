@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 
 import { ErrorResponse } from "@/lib/response"
@@ -7,7 +7,7 @@ import { createZuploConsumerFromSession } from "@/lib/zuplo"
 
 import { authOptions } from "../auth/[...nextauth]/route"
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextRequest, res: NextResponse) => {
   const session = await getServerSession(authOptions)
 
   if (session === null || !session.user || !session.user.email) {
