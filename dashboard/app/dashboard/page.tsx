@@ -23,11 +23,11 @@ export default async function DashboardPage() {
             </Link>{" "}
             and sign in
           </p>
-          <Image src="/docs-signin.png" alt="docs" />
+          <Image src="/docs-signin.png" width="700" height="500" alt="docs" />
           <p className="max-w-[700px] text-lg sm:text-xl">
             Once logged in, click on <code>Create Key</code>:
           </p>
-          <Image src="/bucket-create-key.png" alt="create key" />
+          <Image src="/bucket-create-key.png" width="700" height="500" alt="create key" />
           <p className="max-w-[700px] text-lg  sm:text-xl">
             Make an authenticated API request:
           </p>
