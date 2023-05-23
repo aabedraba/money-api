@@ -1,18 +1,35 @@
 import { DefaultSession } from "next-auth"
 
+const zuploDevApiBaseUrl = "https://dev.zuplo.com/v1"
+
+const zuploRequest = async (path: string, method: string, body?: any) => {
+  const request = await fetch(`${zuploDevApiBaseUrl}${path}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.ZUPLO_API_KEY}`,
+    },
+    body: body && JSON.stringify(body),
+  })
+
+  return request
+}
+
 export const createZuploConsumerFromSession = async (
   session: DefaultSession
 ) => {
+  const consumerName =
+    (session.user?.name
+      ? session.user.name.replace(/\s/g, "-").toLowerCase()
+      : session.user!.email?.replace(/@.*/, "")) + "-bucket"
+
   const body = {
     description: `bucket for ${session.user!.email}`,
     metadata: {
       email: session.user!.email,
     },
     managers: session.user!.email,
-    name:
-      (session.user?.name
-        ? session.user.name.replace(/\s/g, "-").toLowerCase()
-        : session.user!.email?.replace(/@.*/, "")) + "-bucket",
+    name: consumerName,
     tags: {
       account: process.env.ZUPLO_ACCOUNT_ID,
       environmentType: "PRODUCTION",
@@ -20,8 +37,21 @@ export const createZuploConsumerFromSession = async (
     },
   }
 
+  // Check if consumer already exists
+  const existingConsumer = await zuploRequest(
+    `/accounts/${process.env.ZUPLO_ACCOUNT_ID}/key-buckets/${process.env.ZUPLO_KEY_BUCKET}/consumers/${consumerName}`,
+    "GET"
+  )
+
+  const existingConsumerJson = await existingConsumer.json()
+
+  if (existingConsumerJson.id) {
+    return existingConsumerJson
+  }
+
+  // Create Zuplo Consumer
   const createConsumerResult = await fetch(
-    `https://dev.zuplo.com/v1/accounts/${process.env.ZUPLO_ACCOUNT_ID}/key-buckets/${process.env.ZUPLO_KEY_BUCKET}/consumers`,
+    `/accounts/${process.env.ZUPLO_ACCOUNT_ID}/key-buckets/${process.env.ZUPLO_KEY_BUCKET}/consumers`,
     {
       method: "POST",
       headers: {
@@ -32,13 +62,16 @@ export const createZuploConsumerFromSession = async (
     }
   )
 
-  if (!createConsumerResult.ok) {
-    throw new Error(
-      `Failed to create consumer in Zuplo. Status: ${createConsumerResult.status}`
-    )
-  }
-
   const createConsumerResultJson = await createConsumerResult.json()
+
+  if (!createConsumerResult.ok) {
+    console.error(
+      `Failed to create consumer in Zuplo. Status: ${JSON.stringify(
+        createConsumerResultJson
+      )}`
+    )
+    return null
+  }
 
   return createConsumerResultJson
 }
