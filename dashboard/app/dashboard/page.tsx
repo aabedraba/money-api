@@ -21,7 +21,7 @@ export default async function DashboardPage() {
               target="_blank"
               className="text-blue-500"
             >
-              {zuploUrl}/docs
+              our API docs
             </Link>{" "}
             and sign in
           </p>
