@@ -17,7 +17,7 @@ export default async function IndexPage() {
             <br className="hidden sm:inline" />
             now the change of your life.
           </h1>
-          <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
+          <p className="text-muted-foreground max-w-[700px] text-lg  sm:text-xl">
             The fastest way to get what you need.
           </p>
         </div>
@@ -35,7 +35,7 @@ export default async function IndexPage() {
           }}
         />
       ) : (
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full items-center justify-center ">
           <SignInButton />
         </div>
       )}

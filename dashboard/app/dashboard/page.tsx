@@ -1,3 +1,6 @@
+import Image from "next/image"
+import Link from "next/link"
+
 export default async function DashboardPage() {
   const zuploUrl = process.env.ZUPLO_URL
 
@@ -11,22 +14,28 @@ export default async function DashboardPage() {
           </h1>
           <p className="max-w-[700px] text-lg  sm:text-xl">
             Go to{" "}
-            <a className="text-blue-500" href={zuploUrl + "/docs"}>
+            <Link
+              href={zuploUrl + "/docs"}
+              target="_blank"
+              className="text-blue-500"
+            >
               {zuploUrl}/docs
-            </a>{" "}
+            </Link>{" "}
             and sign in
           </p>
-          <img src="/docs-signin.png" alt="docs" />
+          <Image src="/docs-signin.png" alt="docs" />
           <p className="max-w-[700px] text-lg sm:text-xl">
             Once logged in, click on <code>Create Key</code>:
           </p>
-          <img src="/bucket-create-key.png" alt="create key" />
+          <Image src="/bucket-create-key.png" alt="create key" />
           <p className="max-w-[700px] text-lg  sm:text-xl">
             Make an authenticated API request:
           </p>
           <code>
-            curl --request GET \ --url<br />
-            https://teal-hornet-main-79f7919.zuplo.app/v1/todos \ --header <br />
+            curl --request GET \ --url
+            <br />
+            https://teal-hornet-main-79f7919.zuplo.app/v1/todos \ --header{" "}
+            <br />
             &apos;Authorization: Bearer YOUR_KEY_HERE&apos;
           </code>
         </div>
