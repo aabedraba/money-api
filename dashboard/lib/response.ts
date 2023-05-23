@@ -12,6 +12,6 @@ export class JsonResponse extends Response {
 
 export class ErrorResponse extends JsonResponse {
   constructor(message: string, status = 500) {
-    super({ message }, { status })
+    super({ error: message }, { status })
   }
 }

@@ -1,6 +1,12 @@
 import Script from "next/script"
+import { getServerSession } from "next-auth"
+
+import { SignInButton } from "@/components/sign-in-button"
+import { authOptions } from "./api/auth/[...nextauth]/route"
 
 export default async function IndexPage() {
+  const session = await getServerSession(authOptions)
+
   return (
     <>
       <Script src="https://js.stripe.com/v3/pricing-table.js" />
@@ -17,16 +23,22 @@ export default async function IndexPage() {
         </div>
       </section>
 
-      <div
-        dangerouslySetInnerHTML={{
-          __html: `
+      {session?.user ? (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `
           <stripe-pricing-table 
             pricing-table-id="prctbl_1N9w5eG5nE8RSfGyiSiEgIwj"
             publishable-key="pk_test_51HWUYJG5nE8RSfGywgJ3pwfcC9m4Hiic2QejxjU3mehsrUHBIzmLlZuMJGHeZ7JfKjN5Kmxn5d1FnsOB9tFUejeV00f5HIW9Bk">
           </stripe-pricing-table>
           `,
-        }}
-      />
+          }}
+        />
+      ) : (
+        <div className="w-full flex justify-center items-center">
+          <SignInButton />
+        </div>
+      )}
     </>
   )
 }
