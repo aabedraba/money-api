@@ -18,13 +18,13 @@ export async function getProductSubscriptionFromUser(email: string) {
     )
 
     if (customerSearchResult.data.length === 0) {
-      console.log("User not found in Stripe", email)
+      console.warn("User not found in Stripe", email)
       return null
     }
 
     stripeCustomer = customerSearchResult.data[0]
   } catch (err) {
-    console.log(err)
+    console.error(err)
     return null
   }
 
@@ -33,7 +33,6 @@ export async function getProductSubscriptionFromUser(email: string) {
   )
 
   if (supbscriptionPlan.data.length === 0) {
-    console.log("no subscription plan")
     return null
   }
 

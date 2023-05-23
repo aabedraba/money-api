@@ -16,8 +16,10 @@ export default function FinishCheckout() {
 
       const json = await fetchResult.json()
 
-      if (!fetchResult.ok || json.error) {
-        setErrorMessage(json.error)
+      if (!fetchResult.ok) {
+        setErrorMessage(
+          json.error || `Unknown error... Status: ${fetchResult.status}}`
+        )
         return
       }
 

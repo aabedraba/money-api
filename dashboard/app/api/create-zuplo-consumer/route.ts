@@ -7,7 +7,7 @@ import { createZuploConsumerFromSession } from "@/lib/zuplo"
 
 import { authOptions } from "../auth/[...nextauth]/route"
 
-const handler = async (req: NextRequest, res: NextResponse) => {
+const handler = async () => {
   const session = await getServerSession(authOptions)
 
   if (session === null || !session.user || !session.user.email) {
@@ -21,7 +21,7 @@ const handler = async (req: NextRequest, res: NextResponse) => {
 
   if (productExists === null) {
     return new ErrorResponse(
-      "You must have a subscription to create a Zuplo consumer",
+      "You must have a subscription in Stripe to create a Zuplo consumer",
       401
     )
   }
