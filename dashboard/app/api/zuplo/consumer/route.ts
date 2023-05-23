@@ -1,11 +1,10 @@
-import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 
 import { ErrorResponse } from "@/lib/response"
 import { getProductSubscriptionFromUser } from "@/lib/stripe/user-subscription"
 import { createZuploConsumerFromSession } from "@/lib/zuplo"
 
-import { authOptions } from "../auth/[...nextauth]/route"
+import { authOptions } from "../../auth/[...nextauth]/route"
 
 const handler = async () => {
   const session = await getServerSession(authOptions)
@@ -44,4 +43,4 @@ const handler = async () => {
   )
 }
 
-export { handler as GET }
+export { handler as POST }
