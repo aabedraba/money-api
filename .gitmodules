@@ -1,0 +1,3 @@
+[submodule "zuplo-todo"]
+	path = zuplo-todo
+	url = git@github.com:aabedraba/zuplo-todo.git
