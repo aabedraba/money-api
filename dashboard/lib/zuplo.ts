@@ -50,16 +50,10 @@ export const createZuploConsumerFromSession = async (
   }
 
   // Create Zuplo Consumer
-  const createConsumerResult = await fetch(
+  const createConsumerResult = await zuploRequest(
     `/accounts/${process.env.ZUPLO_ACCOUNT_ID}/key-buckets/${process.env.ZUPLO_KEY_BUCKET}/consumers`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.ZUPLO_API_KEY}`,
-      },
-      body: JSON.stringify(body),
-    }
+    "POST",
+    body
   )
 
   const createConsumerResultJson = await createConsumerResult.json()
