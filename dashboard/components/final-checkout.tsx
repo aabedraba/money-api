@@ -12,7 +12,9 @@ export default function FinishCheckout() {
 
   useEffect(() => {
     const createConsumerInZuplo = async () => {
-      const fetchResult = await fetch("/api/create-zuplo-consumer")
+      const fetchResult = await fetch("/api/zuplo/consumer", {
+        method: "POST",
+      })
 
       const json = await fetchResult.json()
 
