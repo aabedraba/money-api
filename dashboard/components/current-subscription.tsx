@@ -11,10 +11,14 @@ const LoadingAnimation = () => (
 )
 
 type StripeActiveSubscription = {
-  id: string
-  name: string
-  metadata: {
-    requestLimit: string
+  product: {
+    name: string
+    metadata: {
+      requestLimit: number
+    }
+  }
+  usage: {
+    total_usage: number
   }
 }
 
@@ -25,7 +29,7 @@ export const CurrentSubscription = () => {
 
   useEffect(() => {
     const findStripeCustomer = async () => {
-      const response = await fetch("/api/stripe/customer", {
+      const response = await fetch("/api/stripe/subscription", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -51,13 +55,21 @@ export const CurrentSubscription = () => {
       ) : (
         <div className="flex flex-col w-full items-center justify-center">
           <p>
-            You are currently subscribed to <b>{customerSubscription?.name}</b>{" "}
-            plan
+            You are currently subscribed to{" "}
+            <b>{customerSubscription?.product.name}</b> plan
           </p>
-          <p>
-            You have <b>{customerSubscription?.metadata.requestLimit}</b>{" "}
-            requests/month
-          </p>
+          {customerSubscription?.usage ? (
+            <p>
+              You have made <b>{customerSubscription?.usage.total_usage}</b>{" "}
+              requests this month
+            </p>
+          ) : (
+            <p>
+              You have{" "}
+              <b>{customerSubscription?.product.metadata.requestLimit}</b>{" "}
+              requests/month
+            </p>
+          )}
           <p>
             Manage your subscription{" "}
             <Link
