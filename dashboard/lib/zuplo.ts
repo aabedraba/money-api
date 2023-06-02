@@ -1,4 +1,4 @@
-import { DefaultSession } from "next-auth"
+import { DefaultSession, ISODateString } from "next-auth"
 
 const zuploDevApiBaseUrl = "https://dev.zuplo.com/v1"
 
@@ -15,20 +15,30 @@ const zuploRequest = async (path: string, method: string, body?: any) => {
   return request
 }
 
+export interface LoggedInSession extends Partial<DefaultSession> {
+  user: {
+    name: string
+    email: string
+    image: string
+  }
+  expires: ISODateString
+}
+
 export const createZuploConsumerFromSession = async (
-  session: DefaultSession
+  session: LoggedInSession,
+  metadata: { stripeCustomerId: string }
 ) => {
   const consumerName =
-    (session.user?.name
+    (session.user.name
       ? session.user.name.replace(/\s/g, "-").toLowerCase()
-      : session.user!.email?.replace(/@.*/, "")) + "-bucket"
+      : session.user.email.replace(/@.*/, "")) + "-bucket"
 
   const body = {
-    description: `bucket for ${session.user!.email}`,
+    description: `bucket for ${session.user.email}`,
     metadata: {
-      email: session.user!.email,
+      stripeCustomerId: metadata.stripeCustomerId,
     },
-    managers: session.user!.email,
+    managers: session.user.email,
     name: consumerName,
     tags: {
       account: process.env.ZUPLO_ACCOUNT_ID,

@@ -10,8 +10,11 @@ const stripeRequest = async (path: string) => {
   return await request.json()
 }
 
-export async function getSubscriptionFromUser(email: string) {
-  let stripeCustomer: any
+type StripeCustomer = {
+  id: string
+}
+
+export async function getStripeCustomer(email: string) {
   try {
     const customerSearchResult = await stripeRequest(
       `/v1/customers?email=${email}`
@@ -22,14 +25,16 @@ export async function getSubscriptionFromUser(email: string) {
       return null
     }
 
-    stripeCustomer = customerSearchResult.data[0]
+    return customerSearchResult.data[0] as StripeCustomer
   } catch (err) {
     console.error(err)
     return null
   }
+}
 
+export async function getCustomerSubscription(stripeCustomerId: string) {
   const supbscriptionPlan = await stripeRequest(
-    "/v1/subscriptions?customer=" + stripeCustomer.id + "&status=active&limit=1"
+    "/v1/subscriptions?customer=" + stripeCustomerId + "&status=active&limit=1"
   )
 
   if (supbscriptionPlan.data.length === 0) {

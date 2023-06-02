@@ -2,8 +2,9 @@ import { getServerSession } from "next-auth"
 
 import { ErrorResponse, JsonResponse } from "@/lib/response"
 import {
+  getCustomerSubscription,
   getProductById,
-  getSubscriptionFromUser,
+  getStripeCustomer,
   getSubscriptionItemUsage,
 } from "@/lib/stripe/user-subscription"
 
@@ -19,7 +20,13 @@ const handler = async () => {
     )
   }
 
-  const customerSubscription = await getSubscriptionFromUser(session.user.email)
+  const stripeCustomer = await getStripeCustomer(session.user.email)
+
+  if (stripeCustomer === null) {
+    return new ErrorResponse("You are not a paying customer... yet?", 401)
+  }
+
+  const customerSubscription = await getCustomerSubscription(stripeCustomer.id)
 
   if (customerSubscription === null) {
     return new ErrorResponse("You don't have a subscription in Stripe", 401)
