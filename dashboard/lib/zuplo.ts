@@ -24,9 +24,14 @@ export interface LoggedInSession extends Partial<DefaultSession> {
   expires: ISODateString
 }
 
+type ZuploCustomerMetadata = {
+  stripeCustomerId: string
+  monthlyRequestLimit?: string
+}
+
 export const createZuploConsumerFromSession = async (
   session: LoggedInSession,
-  metadata: { stripeCustomerId: string }
+  metadata: ZuploCustomerMetadata
 ) => {
   const consumerName =
     (session.user.name
@@ -35,9 +40,7 @@ export const createZuploConsumerFromSession = async (
 
   const body = {
     description: `bucket for ${session.user.email}`,
-    metadata: {
-      stripeCustomerId: metadata.stripeCustomerId,
-    },
+    metadata: metadata,
     managers: session.user.email,
     name: consumerName,
     tags: {
@@ -52,7 +55,6 @@ export const createZuploConsumerFromSession = async (
     `/accounts/${process.env.ZUPLO_ACCOUNT_ID}/key-buckets/${process.env.ZUPLO_KEY_BUCKET}/consumers/${consumerName}`,
     "GET"
   )
-
   const existingConsumerJson = await existingConsumer.json()
 
   if (existingConsumerJson.id) {

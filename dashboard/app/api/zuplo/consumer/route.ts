@@ -1,7 +1,11 @@
 import { getServerSession } from "next-auth"
 
 import { ErrorResponse } from "@/lib/response"
-import { getStripeCustomer } from "@/lib/stripe/user-subscription"
+import {
+  getCustomerSubscription,
+  getProductById,
+  getStripeCustomer,
+} from "@/lib/stripe/user-subscription"
 import { LoggedInSession, createZuploConsumerFromSession } from "@/lib/zuplo"
 
 import { authOptions } from "../../auth/[...nextauth]/route"
@@ -27,10 +31,26 @@ const handler = async () => {
     return new ErrorResponse("You must have an active subscription", 401)
   }
 
+  const subscription = await getCustomerSubscription(stripeCustomer.id)
+
+  if (subscription === null) {
+    return new ErrorResponse("You must have an active subscription", 401)
+  }
+
+  const subscriptionType: "metered" | "monthly-limited" =
+    subscription.plan.usage_type === "metered" ? "metered" : "monthly-limited"
+
+  let monthlyRequestLimit: string | undefined = undefined
+  if (subscriptionType === "monthly-limited") {
+    const product = await getProductById(subscription.plan.product)
+    monthlyRequestLimit = product.metadata.monthlyRequestLimit
+  }
+
   const createdZuploConsumer = await createZuploConsumerFromSession(
     session as LoggedInSession, // hacky...
     {
       stripeCustomerId: stripeCustomer.id,
+      monthlyRequestLimit: monthlyRequestLimit,
     }
   )
 
