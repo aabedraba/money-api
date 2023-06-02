@@ -14,7 +14,7 @@ type StripeActiveSubscription = {
   product: {
     name: string
     metadata: {
-      requestLimit: number
+      maxRequestsAllowed: number
     }
   }
   usage: {
@@ -66,7 +66,7 @@ export const CurrentSubscription = () => {
           ) : (
             <p>
               You have{" "}
-              <b>{customerSubscription?.product.metadata.requestLimit}</b>{" "}
+              <b>{customerSubscription?.product.metadata.maxRequestsAllowed}</b>{" "}
               requests/month
             </p>
           )}
