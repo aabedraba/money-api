@@ -1,4 +1,4 @@
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/[...nextauth]/auth-options";
 import { SignInPage } from "@/components/sign-in-page";
 import { StripeSubscriptionTable } from "@/components/stripe-subscription";
 import { getStripeSubscriptionByEmail } from "@/lib/stripe/user-subscription";

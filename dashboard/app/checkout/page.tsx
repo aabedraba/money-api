@@ -1,4 +1,4 @@
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/[...nextauth]/auth-options";
 import FullScreenError from "@/components/full-screen-error";
 import { isLoggedInSession } from "@/lib/logged-in";
 import { getStripeCustomer } from "@/lib/stripe/user-subscription";

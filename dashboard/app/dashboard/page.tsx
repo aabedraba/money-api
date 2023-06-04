@@ -1,4 +1,4 @@
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/[...nextauth]/auth-options";
 import { CurrentSubscription } from "@/components/current-subscription";
 import { isLoggedInSession } from "@/lib/logged-in";
 import { getStripeSubscriptionByEmail } from "@/lib/stripe/user-subscription";

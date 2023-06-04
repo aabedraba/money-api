@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -8,6 +7,7 @@ import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/auth-options";
 
 export const metadata: Metadata = {
   title: {
