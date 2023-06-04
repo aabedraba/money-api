@@ -1,5 +1,5 @@
-import { useEffect, useRef, ReactNode, Dispatch, SetStateAction } from "react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { useEffect, useRef, ReactNode, Dispatch, SetStateAction } from "react";
 
 export default function Leaflet({
   setShow,

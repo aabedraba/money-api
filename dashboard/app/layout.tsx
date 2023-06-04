@@ -1,14 +1,13 @@
-import "@/styles/globals.css"
-import { Metadata } from "next"
-import { getServerSession } from "next-auth"
-
-import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
-import { cn } from "@/lib/utils"
-import { SiteHeader } from "@/components/site-header"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import "@/styles/globals.css";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { SiteHeader } from "@/components/site-header";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { ThemeProvider } from "@/components/theme-provider";
+import { siteConfig } from "@/config/site";
+import { fontSans } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: {
@@ -25,14 +24,14 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-}
+};
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   return (
     <>
@@ -54,5 +53,5 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         </body>
       </html>
     </>
-  )
+  );
 }

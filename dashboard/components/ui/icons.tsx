@@ -1,14 +1,13 @@
+import styles from "./loading-dots.module.css";
 import {
   LucideProps,
   Moon,
   SunMedium,
   Twitter,
   type Icon as LucideIcon,
-} from "lucide-react"
+} from "lucide-react";
 
-import styles from "./loading-dots.module.css"
-
-export type Icon = LucideIcon
+export type Icon = LucideIcon;
 
 export const Icons = {
   sun: SunMedium,
@@ -29,7 +28,7 @@ export const Icons = {
         <span style={{ backgroundColor: color }} />
         <span style={{ backgroundColor: color }} />
       </span>
-    )
+    );
   },
   google: ({ className }: { className: string }) => (
     <svg viewBox="0 0 100 100" className={className}>
@@ -76,4 +75,4 @@ export const Icons = {
       />{" "}
     </svg>
   ),
-}
+};

@@ -1,19 +1,24 @@
-"use client"
+"use client";
 
-import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react"
-import { signIn } from "next-auth/react"
-
-import Modal from "@/components/ui/modal"
-import { Icons } from "@/components/ui/icons"
+import { Icons } from "@/components/ui/icons";
+import Modal from "@/components/ui/modal";
+import { signIn } from "next-auth/react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
 const SignInModal = ({
   showSignInModal,
   setShowSignInModal,
 }: {
-  showSignInModal: boolean
-  setShowSignInModal: Dispatch<SetStateAction<boolean>>
+  showSignInModal: boolean;
+  setShowSignInModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [signInClicked, setSignInClicked] = useState(false)
+  const [signInClicked, setSignInClicked] = useState(false);
 
   return (
     <Modal showModal={showSignInModal} setShowModal={setShowSignInModal}>
@@ -35,8 +40,8 @@ const SignInModal = ({
                 : "border border-gray-200 bg-white text-black hover:bg-gray-50"
             } flex h-10 w-full items-center justify-center space-x-3 rounded-md border text-sm shadow-sm transition-all duration-75 focus:outline-none`}
             onClick={() => {
-              setSignInClicked(true)
-              signIn("auth0")
+              setSignInClicked(true);
+              signIn("auth0");
             }}
           >
             {signInClicked ? (
@@ -51,11 +56,11 @@ const SignInModal = ({
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
 export function useSignInModal() {
-  const [showSignInModal, setShowSignInModal] = useState(false)
+  const [showSignInModal, setShowSignInModal] = useState(false);
 
   const SignInModalCallback = useCallback(() => {
     return (
@@ -63,11 +68,11 @@ export function useSignInModal() {
         showSignInModal={showSignInModal}
         setShowSignInModal={setShowSignInModal}
       />
-    )
-  }, [showSignInModal, setShowSignInModal])
+    );
+  }, [showSignInModal, setShowSignInModal]);
 
   return useMemo(
     () => ({ setShowSignInModal, SignInModal: SignInModalCallback }),
     [setShowSignInModal, SignInModalCallback]
-  )
+  );
 }

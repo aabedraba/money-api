@@ -1,29 +1,27 @@
-import Image from "next/image"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
-
-import { isLoggedInSession } from "@/lib/logged-in"
-import { getStripeSubscriptionByEmail } from "@/lib/stripe/user-subscription"
-import { CurrentSubscription } from "@/components/current-subscription"
-
-import { authOptions } from "../api/auth/[...nextauth]/route"
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { CurrentSubscription } from "@/components/current-subscription";
+import { isLoggedInSession } from "@/lib/logged-in";
+import { getStripeSubscriptionByEmail } from "@/lib/stripe/user-subscription";
+import { getServerSession } from "next-auth";
+import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
-  const zuploUrl = process.env.ZUPLO_URL
-  const session = await getServerSession(authOptions)
-  const isLoggedIn = isLoggedInSession(session)
+  const zuploUrl = process.env.ZUPLO_URL;
+  const session = await getServerSession(authOptions);
+  const isLoggedIn = isLoggedInSession(session);
 
   if (!isLoggedIn) {
-    return redirect("/")
+    return redirect("/");
   }
 
   const customerSubscription = await getStripeSubscriptionByEmail(
     session.user.email
-  )
+  );
 
   if (!customerSubscription.ok) {
-    redirect("/")
+    redirect("/");
   }
 
   return (
@@ -69,5 +67,5 @@ export default async function DashboardPage() {
       </section>
       <CurrentSubscription customerSubscription={customerSubscription.val} />
     </div>
-  )
+  );
 }

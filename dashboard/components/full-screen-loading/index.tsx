@@ -1,6 +1,5 @@
-import React from "react"
-
-import "./style.css"
+import React from "react";
+import "./style.css";
 
 const FullScreenLoading = () => {
   return (
@@ -10,7 +9,7 @@ const FullScreenLoading = () => {
         <div className="loading-circle-2" />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FullScreenLoading
+export default FullScreenLoading;

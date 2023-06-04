@@ -35,7 +35,8 @@
 }
 
 @keyframes sk-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0);
   }
   50% {

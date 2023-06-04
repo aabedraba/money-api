@@ -1,19 +1,17 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Session } from "next-auth"
-
-import { siteConfig } from "@/config/site"
-
-import { useSignInModal } from "./sign-in-modal"
-import UserDropdown from "./user-dropdown"
+import { useSignInModal } from "./sign-in-modal";
+import UserDropdown from "./user-dropdown";
+import { siteConfig } from "@/config/site";
+import { Session } from "next-auth";
+import Link from "next/link";
 
 interface NavBarProps {
-  session: Session | null
+  session: Session | null;
 }
 
 export default function NavBar({ session }: NavBarProps) {
-  const { SignInModal, setShowSignInModal } = useSignInModal()
+  const { SignInModal, setShowSignInModal } = useSignInModal();
 
   return (
     <div className="flex gap-6 md:gap-10">
@@ -25,5 +23,5 @@ export default function NavBar({ session }: NavBarProps) {
       </Link>
       <div>{session ? <UserDropdown session={session} /> : <></>}</div>
     </div>
-  )
+  );
 }

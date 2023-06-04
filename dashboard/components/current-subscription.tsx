@@ -1,11 +1,10 @@
-import Link from "next/link"
-
-import { StripeActiveSubscription } from "@/lib/stripe/user-subscription"
+import { StripeActiveSubscription } from "@/lib/stripe/user-subscription";
+import Link from "next/link";
 
 export const CurrentSubscription = ({
   customerSubscription,
 }: {
-  customerSubscription: StripeActiveSubscription
+  customerSubscription: StripeActiveSubscription;
 }) => {
   return (
     <div className="flex flex-col w-full items-center justify-center">
@@ -35,5 +34,5 @@ export const CurrentSubscription = ({
         </Link>
       </p>
     </div>
-  )
-}
+  );
+};

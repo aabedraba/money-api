@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useSignInModal } from "./sign-in-modal"
+import { useSignInModal } from "./sign-in-modal";
 
 export const SignInButton = () => {
-  const { SignInModal, setShowSignInModal } = useSignInModal()
+  const { SignInModal, setShowSignInModal } = useSignInModal();
   return (
     <>
       <SignInModal />
@@ -14,5 +14,5 @@ export const SignInButton = () => {
         Sign In
       </button>
     </>
-  )
-}
+  );
+};

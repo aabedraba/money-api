@@ -1,9 +1,10 @@
 "use client";
 
-import { Dispatch, SetStateAction, ReactNode, useRef } from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
-import useWindowSize from "@/lib/hooks/use-window-size";
 import Leaflet from "./leaflet";
+import useWindowSize from "@/lib/hooks/use-window-size";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { Dispatch, SetStateAction, ReactNode, useRef } from "react";
+
 export default function Popover({
   children,
   content,

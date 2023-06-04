@@ -1,11 +1,10 @@
-import Link from "next/link"
-import { Session } from "next-auth"
-
-import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
-import { Icons } from "@/components/ui/icons"
-import NavBar from "@/components/navbar"
-import { ThemeToggle } from "@/components/theme-toggle"
+import NavBar from "@/components/navbar";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { buttonVariants } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
+import { siteConfig } from "@/config/site";
+import { Session } from "next-auth";
+import Link from "next/link";
 
 export function SiteHeader({ session }: { session: Session | null }) {
   return (
@@ -49,5 +48,5 @@ export function SiteHeader({ session }: { session: Session | null }) {
         </div>
       </div>
     </header>
-  )
+  );
 }

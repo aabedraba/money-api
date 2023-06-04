@@ -1,4 +1,4 @@
-import { SignInButton } from "./sign-in-button"
+import { SignInButton } from "./sign-in-button";
 
 export const SignInPage = () => {
   return (
@@ -17,5 +17,5 @@ export const SignInPage = () => {
         <SignInButton />
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,20 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { LayoutDashboard, LogOut } from "lucide-react"
-import { Session } from "next-auth"
-import { signOut } from "next-auth/react"
-
-import Popover from "@/components/ui/popover"
+import Popover from "@/components/ui/popover";
+import { LogOut } from "lucide-react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function UserDropdown({ session }: { session: Session }) {
-  const { email, image } = session?.user || {}
-  const [openPopover, setOpenPopover] = useState(false)
-  const router = useRouter()
+  const { email, image } = session?.user || {};
+  const [openPopover, setOpenPopover] = useState(false);
 
-  if (!email) return null
+  if (!email) return null;
 
   return (
     <div className="relative inline-block text-left">
@@ -47,5 +44,5 @@ export default function UserDropdown({ session }: { session: Session }) {
         </button>
       </Popover>
     </div>
-  )
+  );
 }

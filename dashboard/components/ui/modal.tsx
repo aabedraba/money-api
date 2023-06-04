@@ -1,5 +1,9 @@
 "use client";
 
+import Leaflet from "./leaflet";
+import useWindowSize from "@/lib/hooks/use-window-size";
+import FocusTrap from "focus-trap-react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Dispatch,
   SetStateAction,
@@ -7,10 +11,6 @@ import {
   useEffect,
   useRef,
 } from "react";
-import FocusTrap from "focus-trap-react";
-import { AnimatePresence, motion } from "framer-motion";
-import Leaflet from "./leaflet";
-import useWindowSize from "@/lib/hooks/use-window-size";
 
 export default function Modal({
   children,
@@ -29,7 +29,7 @@ export default function Modal({
         setShowModal(false);
       }
     },
-    [setShowModal],
+    [setShowModal]
   );
 
   useEffect(() => {

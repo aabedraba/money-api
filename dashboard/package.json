@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -14,13 +14,10 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
-    "@next-auth/prisma-adapter": "^1.0.6",
-    "@prisma/client": "^4.14.1",
     "@radix-ui/react-popover": "^1.0.5",
     "@zondax/ts-results": "^3.3.4",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
-    "cmdk": "^0.2.0",
     "focus-trap-react": "^10.1.4",
     "framer-motion": "^10.12.12",
     "lucide-react": "0.105.0-alpha.4",
@@ -41,14 +38,8 @@
     "@types/react-dom": "^18.0.7",
     "@typescript-eslint/parser": "^5.58.0",
     "autoprefixer": "^10.4.13",
-    "eslint": "^8.31.0",
-    "eslint-config-next": "13.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-tailwindcss": "^3.8.0",
     "postcss": "^8.4.21",
     "prettier": "^2.7.1",
-    "prisma": "^4.14.1",
     "tailwindcss": "^3.3.1",
     "typescript": "^4.9.3"
   }

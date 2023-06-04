@@ -1,8 +1,8 @@
-import { Session } from "next-auth"
+import { Session } from "next-auth";
 
 export type LoggedInSession = Session & {
-  user: { email: string; name: string }
-}
+  user: { email: string; name: string };
+};
 
 export const isLoggedInSession = (
   session: Session | null
@@ -13,8 +13,8 @@ export const isLoggedInSession = (
     !session.user.email ||
     !session.user.name
   ) {
-    return false
+    return false;
   }
 
-  return true
-}
+  return true;
+};

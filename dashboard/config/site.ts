@@ -1,4 +1,4 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Money API",
@@ -8,4 +8,4 @@ export const siteConfig = {
     github: "https://github.com/aabedraba/money-api",
     docs: "https://zuplo.com/docs",
   },
-}
+};

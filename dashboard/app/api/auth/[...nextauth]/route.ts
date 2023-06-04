@@ -1,5 +1,5 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
-import Auth0Provider from "next-auth/providers/auth0"
+import NextAuth, { NextAuthOptions } from "next-auth";
+import Auth0Provider from "next-auth/providers/auth0";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -9,8 +9,8 @@ export const authOptions: NextAuthOptions = {
       issuer: process.env.AUTH0_ISSUER,
     }),
   ],
-}
+};
 
-const handler = NextAuth(authOptions)
+const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
