@@ -1,10 +1,30 @@
 import Image from "next/image"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { getServerSession } from "next-auth"
 
+import { isLoggedInSession } from "@/lib/logged-in"
+import { getStripeSubscriptionByEmail } from "@/lib/stripe/user-subscription"
 import { CurrentSubscription } from "@/components/current-subscription"
+
+import { authOptions } from "../api/auth/[...nextauth]/route"
 
 export default async function DashboardPage() {
   const zuploUrl = process.env.ZUPLO_URL
+  const session = await getServerSession(authOptions)
+  const isLoggedIn = isLoggedInSession(session)
+
+  if (!isLoggedIn) {
+    return redirect("/")
+  }
+
+  const customerSubscription = await getStripeSubscriptionByEmail(
+    session.user.email
+  )
+
+  if (!customerSubscription.ok) {
+    redirect("/")
+  }
 
   return (
     // center the content
@@ -47,7 +67,7 @@ export default async function DashboardPage() {
           </code>
         </div>
       </section>
-      <CurrentSubscription />
+      <CurrentSubscription customerSubscription={customerSubscription.val} />
     </div>
   )
 }

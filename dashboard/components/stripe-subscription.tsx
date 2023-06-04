@@ -1,35 +1,4 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-
-import FullScreenLoading from "./full-screen-loading"
-
-export const StripeSubscription = () => {
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
-
-  useEffect(() => {
-    const findStripeCustomer = async () => {
-      const response = await fetch("/api/stripe/customer", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-
-      if (response.ok) {
-        router.push("/dashboard")
-      }
-
-      setLoading(false)
-    }
-
-    findStripeCustomer()
-  }, [])
-
-  if (loading) return <FullScreenLoading />
-
+export const StripeSubscriptionTable = () => {
   return (
     <>
       <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">

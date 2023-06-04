@@ -1,3 +1,5 @@
+import { Err, Ok, Result } from "@zondax/ts-results"
+
 const stripeAPIKey = process.env.STRIPE_SECRET_KEY
 
 const stripeRequest = async (path: string) => {
@@ -58,4 +60,68 @@ export async function getSubscriptionItemUsage(subscriptionItemId: string) {
 
 export async function getProductById(productId: string) {
   return await stripeRequest("/v1/products/" + productId)
+}
+
+export type StripeActiveSubscription = {
+  product: {
+    name: string
+    metadata: {
+      maxRequestsAllowed: number
+    }
+  }
+  usage?: {
+    total_usage: number
+  }
+}
+
+enum GetStripeSubscriptionByEmailError {
+  NotPayingCustomer = "You are not a paying customer... yet?",
+  NoSubscription = "You don't have a subscription in Stripe",
+  NoProduct = "You don't have a product in Stripe",
+  NoUsage = "You don't have any usage for your subscription in Stripe",
+}
+
+export const getStripeSubscriptionByEmail = async (
+  customerEmail: string
+): Promise<
+  Result<StripeActiveSubscription, GetStripeSubscriptionByEmailError>
+> => {
+  const stripeCustomer = await getStripeCustomer(customerEmail)
+
+  if (stripeCustomer === null) {
+    return Err(GetStripeSubscriptionByEmailError.NotPayingCustomer)
+  }
+
+  const customerSubscription = await getCustomerSubscription(stripeCustomer.id)
+
+  if (customerSubscription === null) {
+    return Err(GetStripeSubscriptionByEmailError.NoSubscription)
+  }
+
+  const product = await getProductById(customerSubscription.plan.product)
+
+  if (!product) {
+    return Err(GetStripeSubscriptionByEmailError.NoProduct)
+  }
+
+  if (customerSubscription.plan.usage_type === "metered") {
+    const subscriptionItemId = customerSubscription.items.data[0].id
+
+    const subscriptionItemUsage = await getSubscriptionItemUsage(
+      subscriptionItemId
+    )
+
+    if (subscriptionItemUsage === null) {
+      return Err(GetStripeSubscriptionByEmailError.NoUsage)
+    }
+
+    return Ok({
+      usage: subscriptionItemUsage,
+      product,
+    })
+  }
+
+  return Ok({
+    product,
+  })
 }

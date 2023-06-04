@@ -1,4 +1,7 @@
+import { Err, Result } from "@zondax/ts-results"
 import { DefaultSession, ISODateString } from "next-auth"
+
+import { LoggedInSession } from "./logged-in"
 
 const zuploDevApiBaseUrl = "https://dev.zuplo.com/v1"
 
@@ -15,19 +18,14 @@ const zuploRequest = async (path: string, method: string, body?: any) => {
   return request
 }
 
-export interface LoggedInSession extends Partial<DefaultSession> {
-  user: {
-    name: string
-    email: string
-    image: string
-  }
-  expires: ISODateString
+enum CreateZuploConsumerFromSessionErrors {
+  FailedToCreateConsumer = "Failed to create API Key in Zuplo",
 }
 
 export const createZuploConsumerFromSession = async (
   session: LoggedInSession,
   metadata: { stripeCustomerId: string }
-) => {
+): Promise<Result<any, CreateZuploConsumerFromSessionErrors>> => {
   const consumerName =
     (session.user.name
       ? session.user.name.replace(/\s/g, "-").toLowerCase()
@@ -69,12 +67,8 @@ export const createZuploConsumerFromSession = async (
   const createConsumerResultJson = await createConsumerResult.json()
 
   if (!createConsumerResult.ok) {
-    console.error(
-      `Failed to create consumer in Zuplo. Status: ${JSON.stringify(
-        createConsumerResultJson
-      )}`
-    )
-    return null
+    console.error("Failed to create Zuplo consumer", createConsumerResultJson)
+    return Err(CreateZuploConsumerFromSessionErrors.FailedToCreateConsumer)
   }
 
   return createConsumerResultJson
